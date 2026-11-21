@@ -175,10 +175,7 @@ class FitTrackHandler(BaseHTTPRequestHandler):
             return
 
         # Static PWA serving
-        rel = "index.html" if path in ("/", "") else path.lstrip("/")
-             if rel.startswith("icons/") and not (PUBLIC_DIR / rel).exists():
-         rel = rel.split("/", 1)[1]
-
+        rel = ("index.html" if path in ("/", "") else path.lstrip("/")).replace("icons/", "")
         target = (PUBLIC_DIR / rel).resolve()
         if not str(target).startswith(str(PUBLIC_DIR.resolve())) or not target.exists() or target.is_dir():
             target = PUBLIC_DIR / "index.html"
